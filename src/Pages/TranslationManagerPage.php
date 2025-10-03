@@ -2,11 +2,12 @@
 
 namespace Statikbe\FilamentTranslationManager\Pages;
 
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
@@ -78,14 +79,18 @@ class TranslationManagerPage extends Page
         return true;
     }
 
+    protected static string|null|\UnitEnum $navigationGroup = null;
+
+    protected static string|null|\BackedEnum $navigationIcon = null;
+
     public static function getNavigationGroup(): ?string
     {
-        return trans('filament-translation-manager::messages.navigation_group');
+        return __('filament-translation-manager::messages.navigation_group');
     }
 
     public static function getNavigationLabel(): string
     {
-        return trans('filament-translation-manager::messages.title');
+        return __('filament-translation-manager::messages.title');
     }
 
     public static function getNavigationIcon(): ?string
@@ -96,7 +101,7 @@ class TranslationManagerPage extends Page
 
     public function getTitle(): string
     {
-        return trans('filament-translation-manager::messages.title');
+        return __('filament-translation-manager::messages.title');
     }
 
     public function mount(): void
@@ -143,10 +148,10 @@ class TranslationManagerPage extends Page
 
         //transform to data structure necessary for frontend
         foreach ($translations as $key => $translation) {
-            $dataKey = $group.'.'.$key;
+            $dataKey = $group . '.' . $key;
             if (! array_key_exists($dataKey, $data)) {
                 $data[$dataKey] = [
-                    'title' => $group.' - '.$key,
+                    'title' => $group . ' - ' . $key,
                     'type' => 'group',
                     'group' => $group,
                     'translation_key' => $key,
@@ -159,44 +164,45 @@ class TranslationManagerPage extends Page
         return $data;
     }
 
-    public function getFormSchema(): array
+    public function form(Schema $schema): Schema
     {
-        return [
-            Grid::make()
-                ->columns(2)
-                ->schema([
-                    Grid::make()
-                        ->columns(6)
-                        ->schema([
-                            TextInput::make('searchTerm')
-                                ->hiddenLabel()
-                                ->placeholder(trans('filament-translation-manager::messages.search_term_placeholder'))
-                                ->prefixIcon('heroicon-o-magnifying-glass')
-                                ->columnSpan(3),
-                            Grid::make()->schema([
-                                Checkbox::make('onlyShowMissingTranslations')
-                                    ->label(trans('filament-translation-manager::messages.only_show_missing_translations_lbl'))
-                                    ->default(false),
-                            ])->columnSpan(3)->columns(1)->extraAttributes(['class' => 'h-full flex items-center']),
-                        ]),
-                    Grid::make()
-                        ->columns(6)
-                        ->schema([
-                            Select::make('selectedLocales')
-                                ->hiddenLabel()
-                                ->placeholder(trans('filament-translation-manager::messages.selected_languages_placeholder'))
-                                ->multiple()
-                                ->options(array_combine($this->locales, $this->locales))
-                                ->columnSpan(3),
-                            Select::make('selectedGroups')
-                                ->hiddenLabel()
-                                ->placeholder(trans('filament-translation-manager::messages.selected_groups_placeholder'))
-                                ->multiple()
-                                ->options(array_combine($this->groups, $this->groups))
-                                ->columnSpan(3),
-                        ]),
-                ]),
-        ];
+        return $schema
+            ->schema([
+                Grid::make()
+                    ->columns(2)
+                    ->schema([
+                        Grid::make()
+                            ->columns(6)
+                            ->schema([
+                                TextInput::make('searchTerm')
+                                    ->hiddenLabel()
+                                    ->placeholder(__('filament-translation-manager::messages.search_term_placeholder'))
+                                    ->prefixIcon('heroicon-o-magnifying-glass')
+                                    ->columnSpan(3),
+                                Grid::make()->schema([
+                                    Checkbox::make('onlyShowMissingTranslations')
+                                        ->label(__('filament-translation-manager::messages.only_show_missing_translations_lbl'))
+                                        ->default(false),
+                                ])->columnSpan(3)->columns(1)->extraAttributes(['class' => 'h-full flex items-center']),
+                            ]),
+                        Grid::make()
+                            ->columns(6)
+                            ->schema([
+                                Select::make('selectedLocales')
+                                    ->hiddenLabel()
+                                    ->placeholder(__('filament-translation-manager::messages.selected_languages_placeholder'))
+                                    ->multiple()
+                                    ->options(array_combine($this->locales, $this->locales))
+                                    ->columnSpan(3),
+                                Select::make('selectedGroups')
+                                    ->hiddenLabel()
+                                    ->placeholder(__('filament-translation-manager::messages.selected_groups_placeholder'))
+                                    ->multiple()
+                                    ->options(array_combine($this->groups, $this->groups))
+                                    ->columnSpan(3),
+                            ]),
+                    ]),
+            ]);
     }
 
     public function filterTranslations(): void
