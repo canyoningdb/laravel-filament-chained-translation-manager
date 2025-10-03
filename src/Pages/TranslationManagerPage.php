@@ -2,8 +2,8 @@
 
 namespace Statikbe\FilamentTranslationManager\Pages;
 
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
@@ -67,7 +67,7 @@ class TranslationManagerPage extends Page
 
     protected $listeners = [TranslationEditForm::EVENT_TRANSLATIONS_SAVED => 'translationsSaved'];
 
-    protected static string $view = 'filament-translation-manager::pages.translation-manager-page';
+    protected string $view = 'filament-translation-manager::pages.translation-manager-page';
 
     public static function shouldRegisterNavigation(): bool
     {
