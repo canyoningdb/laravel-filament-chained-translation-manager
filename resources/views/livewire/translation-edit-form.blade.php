@@ -50,7 +50,7 @@
                 <div class="block w-full flex items-center space-x-2" x-show="editing">
                     <form @submit.prevent="closeWithSave" class="w-full">
                         <input wire:model.defer="translations.{{ $locale }}"
-                            class="{{ 'block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 border-gray-300 dark:bg-gray-700 dark:text-white dark:focus:border-primary-500 ' }}"
+                            class="{{ 'p-2 block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 border-gray-300 dark:bg-gray-700 dark:text-white dark:focus:border-primary-500 ' }}"
                             id="{{ $id }}" type="text" x-ref="input">
                     </form>
                     <div class="flex items-center align-center">

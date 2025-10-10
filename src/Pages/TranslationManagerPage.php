@@ -148,10 +148,10 @@ class TranslationManagerPage extends Page
 
         //transform to data structure necessary for frontend
         foreach ($translations as $key => $translation) {
-            $dataKey = $group . '.' . $key;
+            $dataKey = $group.'.'.$key;
             if (! array_key_exists($dataKey, $data)) {
                 $data[$dataKey] = [
-                    'title' => $group . ' - ' . $key,
+                    'title' => $group.' - '.$key,
                     'type' => 'group',
                     'group' => $group,
                     'translation_key' => $key,
@@ -172,7 +172,7 @@ class TranslationManagerPage extends Page
                     ->columns(2)
                     ->schema([
                         Grid::make()
-                            ->columns(6)
+                            ->columns(3)
                             ->schema([
                                 TextInput::make('searchTerm')
                                     ->hiddenLabel()
@@ -186,7 +186,7 @@ class TranslationManagerPage extends Page
                                 ])->columnSpan(3)->columns(1)->extraAttributes(['class' => 'h-full flex items-center']),
                             ]),
                         Grid::make()
-                            ->columns(6)
+                            ->columns(3)
                             ->schema([
                                 Select::make('selectedLocales')
                                     ->hiddenLabel()
